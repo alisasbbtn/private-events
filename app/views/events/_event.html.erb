@@ -1,0 +1,13 @@
+<div class="row">
+    <h3><%= link_to event.title, event_path(event) %></h3>
+    <p><%= simple_format(event.description) %></p>
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Date: <small><%= event.date.strftime("%B %d, %Y") %></small></h4>
+      </div>
+
+      <div class="col-md-6">
+        <h4>Location: <small><%= event.location %></small></h4>
+      </div>
+    </div>
+</div>

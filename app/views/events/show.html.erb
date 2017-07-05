@@ -1,0 +1,46 @@
+<%= provide(:title, @event.title) %>
+
+
+<h1 class="text-center"><%= @event.title %></h1>
+
+<div class="row">
+  <div class="col-md-3 text-right">
+    <h4>Creator:
+      <small><%= link_to @event.creator.name, user_path(@event.creator) %></small>
+    </h5>
+    <h4>Date:
+      <small><%= @event.date.strftime("%B %d, %Y") %></small>
+    </h4>
+    <h4>Location:
+      <small><%= @event.location %></small>
+    </h4>
+
+    <% if logged_in? %>
+        <% if attended?(@event) %>
+          <% attending = current_user.attendings.find_by(attended_event_id: @event.id) %>
+          <%= form_for(attending, url: attending_path(attending), method: :delete) do |f| %>
+            <%= f.hidden_field :attended_event_id, value: @event.id %>
+            <%= f.submit 'Unattend event', class: 'btn btn-small btn-danger' %>
+          <% end %>
+        <% else %>
+          <%= form_for(current_user.attendings.build(attended_event_id: @event.id)) do |f| %>
+            <%= f.hidden_field :attended_event_id, value: @event.id %>
+            <%= f.submit 'Attend event', class: 'btn btn-small btn-success' %>
+          <% end %>
+        <% end %>
+    <% else %>
+      <p class="text-muted"><%= link_to "Sign up", signup_path %> or <%= link_to "log in", login_path %> to attend this event!</p>
+    <% end %>
+  </div>
+
+  <div class="col-md-9">
+    <p><%= simple_format(@event.description) %></p>
+    <% if @event.attendees.any? %>
+      <h4 class="text-center"><%= @event.attendees.count %> attendees</h3>
+      <div class="link-group">
+        <% @event.attendees.each do |attendee| %>
+          <%= link_to attendee.name, user_path(attendee), class: 'list-group-item' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>

@@ -1,0 +1,29 @@
+<%= provide(:title, 'Home') %>
+
+<% unless logged_in? %>
+<div class="jumbotron text-center">
+  <h1>Welcome to Private Events</h1>
+  <h2>Event Planning App</h2>
+  <h3><%= link_to "Sign up", signup_path %>
+    or
+    <%= link_to "log in", login_path %>
+    to attend events or create your own!</h3>
+</div>
+<% end %>
+
+<div class="row">
+  <div class="col-md-5">
+    <h1>Latest created events</h1>
+      <%= render @latest_events %>
+    </h1>
+  </div>
+
+  <div class="col-md-5 col-md-offset-2">
+    <h1>Today's events</h1>
+      <%= render @events_today %>
+    </h1>
+  </div>
+</div>
+<div class="container text-center">
+  <%= link_to "See all events", events_path, class: 'btn btn-primary' %>
+</div>
