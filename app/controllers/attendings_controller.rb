@@ -1,9 +1,11 @@
 class AttendingsController < ApplicationController
   def create
     event = Event.find(params[:attending][:attended_event_id])
-    current_user.attendings.create(attended_event: event)
-    flash[:success] = "You are now attending event \"#{event.title}\"."
-    redirect_to event
+    unless current_user.attended_events.include?(event)
+      current_user.attendings.create(attended_event: event)
+      flash[:success] = "You are now attending event \"#{event.title}\"."
+    end
+      redirect_to event
   end
 
   def destroy

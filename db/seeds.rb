@@ -1,3 +1,7 @@
+User.delete_all
+Event.delete_all
+Attending.delete_all
+
 User.create!(name: 'Example User',
              email: 'example@example.com')
 
