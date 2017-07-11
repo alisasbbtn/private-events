@@ -1,7 +1,3 @@
-User.delete_all
-Event.delete_all
-Attending.delete_all
-
 User.create!(name: 'Example User',
              email: 'example@example.com')
 
@@ -12,10 +8,10 @@ User.create!(name: 'Example User',
                email: email)
 end
 
-Event.create!(title: "Example Event Today",
-              description: "Today will be this example event.",
+Event.create!(title: 'Example Event Today',
+              description: 'Today will be this example event.',
               date: Date.today,
-              location: "Example Location",
+              location: 'Example Location',
               creator_id: 1)
 
 34.times do
@@ -32,9 +28,9 @@ Event.create!(title: "Example Event Today",
 end
 
 Event.find_each do |event|
-  attendees = Random.rand(1..10)
-  attendees.times do
+  attendees = (1..User.count).to_a.shuffle.take(Random.rand(1..10))
+  attendees.each do |user_id|
     Attending.create!(attended_event_id: event.id,
-                      attendee_id: Random.rand(1..User.count))
+                      attendee_id: user_id)
   end
 end
