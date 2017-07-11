@@ -43,7 +43,6 @@ group :production do
   gem 'pg'
 end
 
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
